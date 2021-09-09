@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+
+import Professional from 'App/Models/Professional'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -23,6 +25,13 @@ export default class User extends BaseModel {
 
   @column()
   public profile: 'Admin' | 'User' | 'Patient'
+
+  @manyToMany(() => Professional, {
+    pivotTable: 'schedules',
+    pivotColumns: ['date'],
+    pivotTimestamps: true,
+  })
+  public schedule: ManyToMany<typeof Professional>
 
   @column.dateTime({
     autoCreate: true,
