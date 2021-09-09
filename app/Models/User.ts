@@ -24,10 +24,21 @@ export default class User extends BaseModel {
   @column()
   public profile: 'Admin' | 'User' | 'Patient'
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({
+    autoCreate: true,
+    serialize: (value) => {
+      return value.toFormat('dd/MM/yyyy')
+    },
+  })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({
+    autoCreate: true,
+    autoUpdate: true,
+    serialize: (value) => {
+      return value.toFormat('dd/MM/yyyy')
+    },
+  })
   public updatedAt: DateTime
 
   @beforeSave()

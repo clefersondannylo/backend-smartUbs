@@ -14,20 +14,20 @@ export default class UsersController {
     return user
   }
 
-  public async update({ request, params, response }: HttpContextContract) {
+  public async show({ response, params }: HttpContextContract) {
     try {
-      const data = request.only(['name', 'cpf', 'email', 'password', 'profile'])
       const user = await User.findByOrFail('id', params.id)
-      await user.merge(data).save()
       return user
     } catch (error) {
       return response.status(400).json({ error: 'User not found' })
     }
   }
 
-  public async show({ response, params }: HttpContextContract) {
+  public async update({ request, params, response }: HttpContextContract) {
     try {
+      const data = request.only(['name', 'cpf', 'email', 'password', 'profile'])
       const user = await User.findByOrFail('id', params.id)
+      await user.merge(data).save()
       return user
     } catch (error) {
       return response.status(400).json({ error: 'User not found' })

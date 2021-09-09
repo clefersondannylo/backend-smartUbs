@@ -19,9 +19,20 @@ export default class Professional extends BaseModel {
   @belongsTo(() => Category)
   public category: BelongsTo<typeof Category>
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({
+    autoCreate: true,
+    serialize: (value) => {
+      return value.toFormat('dd/MM/yyyy')
+    },
+  })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({
+    autoCreate: true,
+    autoUpdate: true,
+    serialize: (value) => {
+      return value.toFormat('dd/MM/yyyy')
+    },
+  })
   public updatedAt: DateTime
 }

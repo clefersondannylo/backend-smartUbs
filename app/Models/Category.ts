@@ -13,9 +13,20 @@ export default class Category extends BaseModel {
   @hasMany(() => Professional)
   public professionals: HasMany<typeof Professional>
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({
+    autoCreate: true,
+    serialize: (value) => {
+      return value.toFormat('dd/MM/yyyy')
+    },
+  })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({
+    autoCreate: true,
+    autoUpdate: true,
+    serialize: (value) => {
+      return value.toFormat('dd/MM/yyyy')
+    },
+  })
   public updatedAt: DateTime
 }
